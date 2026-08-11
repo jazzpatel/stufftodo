@@ -1,0 +1,1409 @@
+/* ─── Design tokens ──────────────────────────────────── */
+:root {
+    --blue: #0b84ff;
+    --blue-dk: #0060d0;
+    --green: #16a34a;
+    --bg: #f2f4f8;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --pin: #f59e0b;
+    --danger: #ef4444;
+    --done: #9ca3af;
+    --topbar-h: 56px;
+    --bottombar-h: 58px;
+    --drawer-w: 280px;
+    --r: 12px;
+    --sh: 0 2px 12px rgba(0, 0, 0, .1);
+}
+
+/* ─── Dark mode ──────────────────────────────────────── */
+html.dark {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --sh: 0 2px 12px rgba(0, 0, 0, .4);
+}
+
+html.dark .notes-preview {
+    background: #0f172a
+}
+
+html.dark .task-item.pinned {
+    background: #1c1a00
+}
+
+html.dark .toggle-row:hover,
+html.dark .drawer-nav button:hover {
+    background: #0f172a
+}
+
+html.dark .cal-nav {
+    background: var(--card)
+}
+
+html.dark .day-strip {
+    background: var(--card)
+}
+
+html.dark .week-col {
+    background: var(--card)
+}
+
+html.dark .month-cell {
+    background: var(--card)
+}
+
+html.dark .modal-overlay {
+    background: rgba(0, 0, 0, .7)
+}
+
+html.dark .file-status.connected {
+    background: #052e16
+}
+
+html.dark .file-status.prompt {
+    background: #1c0d00
+}
+
+html.dark .file-status.none {
+    background: #0f172a
+}
+
+/* ─── Reset ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+html,
+body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased
+}
+
+#root {
+    height: 100%
+}
+
+/* ─── App shell ──────────────────────────────────────── */
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--bg)
+}
+
+/* ─── Overlay & Drawer ───────────────────────────────── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    z-index: 100;
+    backdrop-filter: blur(2px)
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--drawer-w);
+    background: var(--card);
+    z-index: 101;
+    transform: translateX(-100%);
+    transition: transform .26s cubic-bezier(.4, 0, .2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, .15);
+}
+
+.drawer.open {
+    transform: translateX(0)
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 18px;
+    background: var(--blue);
+    color: white;
+    font-size: 18px;
+    font-weight: 700
+}
+
+.drawer-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 8px 0
+}
+
+.drawer-nav button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 14px 20px;
+    font-size: 15px;
+    color: var(--text);
+    transition: background .15s
+}
+
+.drawer-nav button:hover {
+    background: var(--bg)
+}
+
+.drawer-footer {
+    padding: 12px 18px;
+    border-top: 1px solid var(--border)
+}
+
+.file-status {
+    font-size: 12px;
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: block
+}
+
+.file-status.connected {
+    color: var(--green);
+    background: #f0fdf4
+}
+
+.file-status.prompt {
+    color: #d97706;
+    background: #fffbeb
+}
+
+.file-status.none {
+    color: var(--muted);
+    background: var(--bg)
+}
+
+/* ─── Top bar ────────────────────────────────────────── */
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    height: var(--topbar-h);
+    background: var(--blue);
+    color: white;
+    flex-shrink: 0;
+    z-index: 10;
+    box-shadow: var(--sh)
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap
+}
+
+.title h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -.3px
+}
+
+.top-search {
+    margin-left: auto;
+    background: rgba(255, 255, 255, .22);
+    border: none;
+    border-radius: 20px;
+    padding: 7px 14px;
+    color: white;
+    font-size: 14px;
+    width: 140px;
+    outline: none;
+    transition: width .2s, background .2s
+}
+
+.top-search::placeholder {
+    color: rgba(255, 255, 255, .65)
+}
+
+.top-search:focus {
+    background: rgba(255, 255, 255, .32);
+    width: 190px
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    transition: background .15s
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, .18)
+}
+
+/* ─── Calendar nav ───────────────────────────────────── */
+.cal-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0
+}
+
+.cal-nav-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text)
+}
+
+.cal-nav-btn:hover {
+    background: var(--bg)
+}
+
+.cal-nav-today {
+    background: none;
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 13px;
+    color: var(--blue)
+}
+
+.cal-nav-today:hover {
+    background: rgba(11, 132, 255, .08)
+}
+
+.cal-nav-label {
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text)
+}
+
+/* ─── File banner ────────────────────────────────────── */
+.file-banner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #fffbeb;
+    border-bottom: 1px solid #fcd34d;
+    font-size: 13px;
+    color: #92400e;
+    flex-shrink: 0
+}
+
+.file-banner>span {
+    flex: 1;
+    min-width: 0
+}
+
+.file-banner button {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer
+}
+
+.file-banner button.secondary {
+    background: none;
+    color: var(--blue);
+    border: 1px solid var(--blue)
+}
+
+/* ─── Main content ───────────────────────────────────── */
+.content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column
+}
+
+/* ─── Quick add ──────────────────────────────────────── */
+.quick-add-wrap {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0
+}
+
+.quick-add {
+    display: flex;
+    gap: 6px;
+    padding: 12px 14px 6px
+}
+
+.quick-add input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    font-size: 15px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s
+}
+
+.quick-add input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(11, 132, 255, .12)
+}
+
+.qa-submit,
+.qa-detail {
+    border: none;
+    border-radius: var(--r);
+    padding: 10px 14px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background .15s;
+    flex-shrink: 0
+}
+
+.qa-submit {
+    background: var(--blue);
+    color: white
+}
+
+.qa-submit:hover {
+    background: var(--blue-dk)
+}
+
+.qa-detail {
+    background: var(--card);
+    color: var(--muted);
+    border: 1.5px solid var(--border)
+}
+
+.qa-detail:hover {
+    background: var(--bg)
+}
+
+.nlp-hint {
+    font-size: 12px;
+    color: var(--blue);
+    padding: 0 14px 8px;
+    font-weight: 500
+}
+
+/* ─── Task list ──────────────────────────────────────── */
+.tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 14px 80px
+}
+
+.task-section-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 4px 4px
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 12px;
+    cursor: grab;
+    transition: opacity .2s, border-color .15s
+}
+
+.task-item:active {
+    cursor: grabbing
+}
+
+.task-item.pinned {
+    border-left: 3.5px solid var(--pin);
+    background: #fffdf0
+}
+
+.task-item.done {
+    opacity: .55
+}
+
+.task-item.compact {
+    padding: 7px 8px
+}
+
+.task-check {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0
+}
+
+.task-check input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--blue)
+}
+
+.task-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+    gap: 3px
+}
+
+.task-body:focus {
+    outline: 2px solid var(--blue);
+    border-radius: 4px
+}
+
+.task-text {
+    font-size: 15px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.task-item.compact .task-text {
+    font-size: 13px
+}
+
+.task-item.done .task-text {
+    text-decoration: line-through;
+    color: var(--done)
+}
+
+.task-badges {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    font-size: 13px
+}
+
+.badge-date {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 1px 5px
+}
+
+.task-item.compact .task-badges {
+    display: none
+}
+
+/* ─── Linked phone / address ─────────────────────────── */
+.linked {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    border-radius: 3px;
+    padding: 0 1px
+}
+
+.linked-phone {
+    color: var(--blue)
+}
+
+.linked-addr {
+    color: var(--green)
+}
+
+/* ─── List view ──────────────────────────────────────── */
+.list-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden
+}
+
+.list-view .tasks {
+    overflow-y: auto;
+    flex: 1
+}
+
+/* ─── Day strip ──────────────────────────────────────── */
+.day-strip {
+    display: flex;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    scrollbar-width: none;
+}
+
+.day-strip::-webkit-scrollbar {
+    display: none
+}
+
+.day-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    min-width: 46px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: var(--bg);
+    cursor: pointer;
+    transition: all .15s;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.day-chip-dow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted)
+}
+
+.day-chip-num {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text)
+}
+
+.day-chip-badge {
+    font-size: 9px;
+    background: var(--day-color, var(--blue));
+    color: white;
+    border-radius: 20px;
+    padding: 1px 5px;
+    min-width: 16px;
+    text-align: center;
+}
+
+.day-chip.active {
+    border-color: var(--day-color, var(--blue));
+    background: var(--card)
+}
+
+.day-chip.active .day-chip-dow,
+.day-chip.active .day-chip-num {
+    color: var(--day-color, var(--blue))
+}
+
+.day-chip.today .day-chip-num::after {
+    content: '•';
+    display: block;
+    font-size: 8px;
+    color: var(--day-color, var(--blue));
+    line-height: 1;
+    margin-top: -4px
+}
+
+/* ─── Day view ───────────────────────────────────────── */
+.day-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden
+}
+
+.day-tasks {
+    flex: 1;
+    overflow-y: auto
+}
+
+.day-tasks .tasks {
+    padding-bottom: 0
+}
+
+.day-tasks.drop-target {
+    outline: 2px dashed var(--blue);
+    outline-offset: -4px;
+    border-radius: var(--r)
+}
+
+.inbox-section {
+    margin: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden
+}
+
+.inbox-section summary {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    list-style: none;
+    user-select: none
+}
+
+.inbox-section summary::-webkit-details-marker {
+    display: none
+}
+
+.inbox-section .tasks {
+    padding: 8px 10px 8px
+}
+
+/* ─── Week view (vertical) ───────────────────────────── */
+.week-view-v {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 14px;
+    gap: 12px;
+    /* Leaves room for the sticky FAB */
+    padding-bottom: 72px;
+}
+
+/* Day row card */
+.week-row {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    /* border-radius: var(--r); */
+    border: 1.5px solid var(--border);
+    /* border-left: 4px solid var(--day-color, var(--border)); */
+    /* overflow: hidden; */
+    transition: border-color .15s;
+}
+
+.week-row.today {
+    background: color-mix(in srgb, var(--day-color, var(--blue)) 6%, var(--card));
+    border-left-width: 5px;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--day-color, var(--blue)) 20%, transparent);
+}
+
+.week-row.drop-target {
+    background: rgba(11, 132, 255, .05);
+    border-style: dashed
+}
+
+/* Row header — sticky so it stays visible while scrolling long task lists */
+.week-row-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 8px 10px;
+    background: inherit;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.week-row-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: #fff;
+    line-height: 1;
+}
+
+.week-row-dow {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: .85
+}
+
+.week-row-num {
+    font-size: 17px;
+    font-weight: 800;
+    margin-top: -1px
+}
+
+.week-row-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--day-color, var(--text))
+}
+
+.week-row-today-pill {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: var(--day-color, var(--blue));
+    color: #fff;
+    border-radius: 30px;
+    padding: 2px 7px;
+}
+
+.week-row-count {
+    font-size: 11px;
+    color: var(--muted)
+}
+
+.week-add {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--day-color, var(--muted));
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: opacity .15s;
+}
+
+.week-add:hover {
+    opacity: .65
+}
+
+/* Tasks inside a row */
+.week-row-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 10px
+}
+
+.week-row-tasks .task-item {
+    border-radius: 8px
+}
+
+.week-row-empty {
+    list-style: none;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 12px 0;
+}
+
+/* Floating "scroll to Today" FAB */
+.week-today-fab {
+    position: sticky;
+    bottom: 16px;
+    align-self: flex-end;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(11, 132, 255, .35);
+    transition: transform .15s, box-shadow .15s;
+    z-index: 10;
+}
+
+.week-today-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(11, 132, 255, .45)
+}
+
+.week-today-fab:active {
+    transform: translateY(0)
+}
+
+.week-today-fab-icon {
+    font-size: 15px;
+    line-height: 1
+}
+
+.week-today-fab-label {
+    letter-spacing: .02em
+}
+
+/* ─── Month view ─────────────────────────────────────── */
+.month-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 8px 10px;
+    overflow: auto
+}
+
+.month-dow-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 4px
+}
+
+.month-dow {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 0
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    flex: 1
+}
+
+.month-cell {
+    min-height: 52px;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 6px 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: border-color .15s, background .15s
+}
+
+.month-cell:hover {
+    border-color: var(--blue);
+    background: rgba(11, 132, 255, .04)
+}
+
+.month-cell.empty {
+    background: none;
+    border-color: transparent;
+    cursor: default
+}
+
+.month-cell.today {
+    border-color: var(--blue);
+    background: rgba(11, 132, 255, .06)
+}
+
+.month-cell.today .month-num {
+    background: var(--blue);
+    color: white !important;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px
+}
+
+.month-num {
+    font-size: 13px;
+    font-weight: 600
+}
+
+.month-dots {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-wrap: wrap;
+    margin-top: 2px
+}
+
+.month-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0
+}
+
+.month-more {
+    font-size: 9px;
+    color: var(--muted)
+}
+
+/* ─── Bottom bar ─────────────────────────────────────── */
+.bottombar {
+    display: flex;
+    align-items: center;
+    height: var(--bottombar-h);
+    padding: 0 6px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, .06)
+}
+
+.bottom-tabs {
+    display: flex;
+    flex: 1;
+    gap: 0
+}
+
+.tab-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 4px;
+    border-radius: var(--r);
+    color: var(--muted);
+    transition: color .15s, background .15s
+}
+
+.tab-btn:hover {
+    background: var(--bg)
+}
+
+.tab-btn.active {
+    color: var(--blue)
+}
+
+.tab-icon {
+    font-size: 18px;
+    line-height: 1
+}
+
+.tab-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px
+}
+
+.bottom-right {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0
+}
+
+.bottom-icon {
+    color: var(--muted) !important
+}
+
+.bottom-icon:hover {
+    background: var(--bg) !important;
+    color: var(--blue) !important
+}
+
+/* ─── Empty state ────────────────────────────────────── */
+.empty {
+    text-align: center;
+    color: var(--muted);
+    font-size: 15px;
+    padding: 48px 0
+}
+
+/* ─── Modal ──────────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    backdrop-filter: blur(3px)
+}
+
+@media (min-width: 600px) {
+    .modal-overlay {
+        align-items: center
+    }
+}
+
+.modal {
+    background: var(--card);
+    width: 100%;
+    max-width: 560px;
+    max-height: 92dvh;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden
+}
+
+@media (min-width: 600px) {
+    .modal {
+        border-radius: 20px;
+        max-height: 88dvh
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0
+}
+
+.modal-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text)
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--muted);
+    padding: 4px 8px;
+    border-radius: 8px
+}
+
+.modal-close:hover {
+    background: var(--bg)
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0
+}
+
+/* ─── Form fields ────────────────────────────────────── */
+.field-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: 12px;
+    display: block
+}
+
+.field-hint {
+    font-weight: 400;
+    text-transform: none;
+    font-size: 11px;
+    color: var(--muted)
+}
+
+.field-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    font-size: 15px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s
+}
+
+.field-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(11, 132, 255, .12)
+}
+
+.field-select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    font-size: 15px;
+    background: var(--card);
+    color: var(--text);
+    outline: none
+}
+
+.field-select:focus {
+    border-color: var(--blue)
+}
+
+.field-textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    font-size: 14px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.5
+}
+
+.field-textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(11, 132, 255, .12)
+}
+
+/* ─── Priority selector ──────────────────────────────── */
+.priority-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px
+}
+
+.prio-btn {
+    flex: 1;
+    padding: 8px 6px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--bg);
+    color: var(--muted);
+    transition: all .15s
+}
+
+.prio-btn:hover {
+    border-color: var(--prio-color, var(--border))
+}
+
+.prio-btn.active {
+    border-color: var(--prio-color, var(--blue));
+    color: var(--prio-color, var(--blue));
+    background: var(--card)
+}
+
+/* ─── Toggle group ───────────────────────────────────── */
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden;
+    margin-top: 12px
+}
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text);
+    gap: 12px
+}
+
+.toggle-row:not(:last-child) {
+    border-bottom: 1px solid var(--border)
+}
+
+.toggle-row:hover {
+    background: var(--bg)
+}
+
+.toggle-row input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--blue);
+    flex-shrink: 0
+}
+
+/* ─── Date row & clear ───────────────────────────────── */
+.date-row {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.date-row .field-input {
+    flex: 1
+}
+
+.clear-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap
+}
+
+.clear-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger)
+}
+
+/* ─── Notes preview ──────────────────────────────────── */
+.notes-preview {
+    background: var(--bg);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    margin-top: 6px
+}
+
+.notes-preview-label {
+    font-size: 11px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px
+}
+
+.notes-preview-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    word-break: break-word
+}
+
+/* ─── Photos ─────────────────────────────────────────── */
+.photos-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px
+}
+
+.photo-thumb {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border)
+}
+
+.photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.photo-remove {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background: rgba(0, 0, 0, .55);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.photo-add {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    border: 1.5px dashed var(--border);
+    background: var(--bg);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .15s
+}
+
+.photo-add:hover {
+    border-color: var(--blue)
+}
+
+/* ─── Modal buttons ──────────────────────────────────── */
+.btn-primary {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: var(--r);
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer
+}
+
+.btn-primary:hover {
+    background: var(--blue-dk)
+}
+
+.btn-primary:disabled {
+    opacity: .5;
+    cursor: not-allowed
+}
+
+.btn-secondary {
+    background: none;
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer
+}
+
+.btn-secondary:hover {
+    background: var(--bg)
+}
+
+.btn-danger {
+    background: none;
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+    border-radius: var(--r);
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer
+}
+
+.btn-danger:hover {
+    background: #fef2f2
+}

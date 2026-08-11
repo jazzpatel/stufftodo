@@ -1,0 +1,7 @@
+- Each day of the week has a dedicated section for tasks and the user can easily switch between days to view and manage their tasks.
+- The app provides a visual representation of tasks with color-coded labels for different priorities.
+- Users can set reminders for tasks and receive notifications to stay on track.
+- The app supports natural language input for task creation and management.
+- The app offers a dark mode for better visibility in low-light environments.
+- Each day of the week should have a unique label color for better differentiation.
+- Represent the week visually in a row format with each day as a card.
