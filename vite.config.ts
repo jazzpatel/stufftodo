@@ -7,4 +7,8 @@ export default defineConfig({
     emptyOutDir: true,
   },
   plugins: [react()],
+  server: {
+    host: true, // same as --host, binds to 0.0.0.0
+    port: 5183, // optional, default is 5173
+  },
 });
