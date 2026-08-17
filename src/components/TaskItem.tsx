@@ -38,7 +38,6 @@ export function TaskItem({
 
   return (
     <li
-      style={style}
       className={[
         "task-item",
         task.done ? "done" : "",
@@ -63,20 +62,21 @@ export function TaskItem({
         <span className="task-text">{renderLinkedText(task.text)}</span>
         {!compact && (
           <span className="task-badges">
-            {(task.priority === "high" || task.important) && (
+            {/* {(task.priority === "high" || task.important) && (
               <span title="High priority">🔴</span>
             )}
             {task.priority === "medium" && (
               <span title="Medium priority">🟡</span>
-            )}
-            {task.priority === "low" && <span title="Low priority">🔵</span>}
-            {task.pinned && <span title="Pinned">📌</span>}
-            {task.notes && <span title="Has notes">📝</span>}
-            {task.photos?.length > 0 && <span title="Has photos">📷</span>}
-            {task.recurrence !== "none" && (
+            )} */}
+            {/* {task.priority === "low" && <span title="Low priority">🔵</span>}
+            {task.pinned && <span title="Pinned">📌</span>} */}
+            {task.notes && <span title="Has notes">🗒</span>}
+            {/* {task.photos?.length > 0 && <span title="Has photos">📷</span>} */}
+            {/* {task.recurrence !== "none" && (
               <span title={`Repeats ${task.recurrence}`}>🔁</span>
             )}
             {task.reminder && <span title="Has reminder">🔔</span>}
+            */}
             {showDate && task.dueDate && (
               <span className="badge-date">{task.dueDate}</span>
             )}

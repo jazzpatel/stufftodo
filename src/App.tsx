@@ -178,9 +178,9 @@ export default function App() {
           onSearch={setQuery}
         />
 
-        {fileStatus === "none" && (
+        {/* {fileStatus === "none" && (
           <FileBanner onImport={handleImport} onExport={handleExport} />
-        )}
+        )} */}
 
         {view !== "list" && (
           <CalendarNav view={view} date={selDate} onChange={setSelDate} />

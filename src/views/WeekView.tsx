@@ -111,10 +111,10 @@ export function WeekView({
           >
             {/* ── Day header ── */}
             <div className="week-row-header">
-              <div className="week-row-badge" style={{ background: color }}>
+              {/* <div className="week-row-badge" style={{ background: color }}>
                 <span className="week-row-dow">{dowLabel}</span>
                 <span className="week-row-num">{dateNum}</span>
-              </div>
+              </div> */}
               <span className="week-row-title">{formatDayShort(day)}</span>
               {todayRow && <span className="week-row-today-pill">Today</span>}
               <span style={{ flex: 1 }} />
@@ -154,7 +154,7 @@ export function WeekView({
       })}
 
       {/* ── Floating "scroll to today" button ── */}
-      {todayStr && fabVisible && (
+      {/* {todayStr && fabVisible && (
         <button
           className="week-today-fab"
           onClick={scrollToToday}
@@ -163,7 +163,7 @@ export function WeekView({
           <span className="week-today-fab-icon">☀</span>
           <span className="week-today-fab-label">Today</span>
         </button>
-      )}
+      )} */}
     </div>
   );
 }

@@ -16,6 +16,24 @@
     --drawer-w: 280px;
     --r: 12px;
     --sh: 0 2px 12px rgba(0, 0, 0, .1);
+    --bg: #f5f5f7;
+    --sidebar-bg: #ffffff;
+    --card-bg: #ffffff;
+    --border: #e5e5ea;
+    --text: #1d1d1f;
+    --text-2: #6e6e73;
+    --text-3: #aeaeb2;
+    --accent: #0a84ff;
+    --accent-h: #0070e0;
+    --danger: #ff3b30;
+    --success-bg: #d1f5dc;
+    --success-text: #1a7a3c;
+    --success-border: #a3e3b8;
+    --error-bg: #fde8e7;
+    --error-text: #c0392b;
+    --error-border: #f5b7b1;
+    --sidebar-w: 264px;
+
 }
 
 /* ─── Dark mode ──────────────────────────────────────── */
@@ -440,7 +458,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 0 14px 80px
+    padding: 0 5px 80px
 }
 
 .task-section-header {
@@ -457,9 +475,9 @@ body {
     align-items: center;
     gap: 8px;
     background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: var(--r);
-    padding: 10px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 2px; //var(--r);
+    padding: 5px 12px;
     cursor: grab;
     transition: opacity .2s, border-color .15s
 }
@@ -813,11 +831,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 8px 10px
+    padding: 8px 5px
 }
 
 .week-row-tasks .task-item {
-    border-radius: 8px
+    border-radius: 2px
 }
 
 .week-row-empty {
@@ -976,6 +994,58 @@ body {
     border-top: 1px solid var(--border);
     flex-shrink: 0;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, .06)
+}
+
+.btb-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: 6px 0;
+    height: 100%;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.13s;
+}
+
+.btb-tab:hover,
+.btb-tab--active {
+    color: var(--accent);
+}
+
+.btb-tab--primary {
+    flex: 0 0 56px;
+    color: var(--card-bg);
+}
+
+.btb-primary-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: rgb(249, 249, 249);
+    box-shadow: 0 4px 14px rgba(10, 132, 255, 0.35);
+    transition: background 0.13s, box-shadow 0.13s;
+}
+
+.btb-tab--primary:hover .btb-primary-circle {
+    background: var(--accent-h);
+    box-shadow: 0 4px 18px rgba(10, 132, 255, 0.45);
+}
+
+.btb-label {
+    font-size: 10px;
+    font-weight: 500;
+    user-select: none;
 }
 
 .bottom-tabs {

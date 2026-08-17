@@ -15,7 +15,7 @@ export function TopBar({ onMenu, searchRef, query, onSearch }: Props) {
       </button>
       <div className="title">
         <img src="/icons/icon.svg" alt="" width={28} height={28} />
-        <h1>TaskFlow 1.0</h1>
+        <h1>TaskFlow 2.0</h1>
       </div>
       <input
         ref={searchRef}
