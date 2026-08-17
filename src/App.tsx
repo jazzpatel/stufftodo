@@ -47,16 +47,18 @@ export default function App() {
   const [modalTask, setModalTask] = useState<Task | null>(null);
   const [isNewTask, setIsNewTask] = useState(false);
 
-  const autoSave = useRef(false);
+  const autoSave = useRef(true);
   const searchRef = useRef<HTMLInputElement>(null);
   const draggingId = useRef<string | null>(null);
 
   // ─── Bootstrap ──────────────────────────────────────────────────────────────
   useEffect(() => {
+    console.log("App mounted");
     registerSW();
     requestNotificationPermission().catch(() => {});
     (async () => {
       const perm = await queryStoredHandlePermission();
+      console.log("app.useEffect> Stored handle permission:", perm);
       if (perm === "granted") {
         const data = await tryAutoLoad();
         if (data) {
@@ -80,7 +82,9 @@ export default function App() {
     checkAndFireAlerts(tasks);
     scheduleReminders(tasks);
   }, [tasks]);
+
   useEffect(() => {
+    console.log("Auto-saving tasks... autoSave.current: ", autoSave.current);
     if (!autoSave.current) return;
     saveToFile(JSON.stringify(tasks, null, 2)).catch(console.warn);
   }, [tasks]);

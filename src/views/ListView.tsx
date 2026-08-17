@@ -22,6 +22,7 @@ export function ListView({
   onNewTask,
 }: Props) {
   const q = query.toLowerCase();
+  console.log("ListView> tasks: ", tasks);
   const filtered = sortTasks(
     tasks.filter(
       (t) =>

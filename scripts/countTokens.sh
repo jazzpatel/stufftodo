@@ -1,0 +1,1 @@
+find src/ -type f  | xargs -I{} cat {} | wc -m | xargs -I {} echo "{} / 4" | bc
